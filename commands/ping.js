@@ -1,10 +1,16 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const mssql = require('mssql');
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ping')
 		.setDescription('Replies with Pong!'),
-	async execute(interaction) {
+	/**
+     * @param {CommandInteraction} interaction 
+     * @param {mssql.ConnectionPool} con 
+     */
+	async execute(interaction, con) {
 		await interaction.reply('Pong!');
 	},
+	permissions: 'all'
 };

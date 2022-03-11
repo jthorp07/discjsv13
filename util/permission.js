@@ -1,36 +1,38 @@
-const mysql = require('mysql');
+const mssql = require('mssql');
+// const { isHost, isCurrentTurn, isPlayer, isOutsideUser } = require('./globals');
 
 module.exports = {
 
     /**
      * 
-     * @param {mysql.Connection} con 
+     * @param {mssql.ConnectionPool} con 
      * @param {string} permissionLevel 
      * @param {string} user 
      * 
-     * @returns {boolean}
+     * @returns {Promise<boolean>}
      */
     async checkPermissions(con, permissionLevel, user) {
 
-        let query = `SELECT * FROM permissions WHERE discordid = ${user}`
-
-        con.query(query).then(rows => {
-
-            switch (permissionLevel) {
-                case 'all':
-                    return true; // Anyone can use it so go ahead
-                case 'owner':
-                    return (rows[0].isOwner==1);
-                case 'moderator':
-                    return (rows[0].isMod==1);
-                case 'administrator':
-                    return (rows[0].isAdmin==1);
-                default:
-                    return false; // If this does happen I don't want anything else to happen o-o
+        return new Promise((resolve, reject) => {
+            if (permissionLevel == 'all') {
+                resolve(true);
             }
 
+            if (permissionLevel == '') {
+                
+
+            }
+
+            if (permissionLevel == '') {
+                
+                
+            }
+
+            // Timeout after 2 minutes (should not take nearly that long to finish)
+            setTimeout(() => {
+                reject('Timeout');
+            }, 120000);
+
         });
-
     }
-
 }

@@ -3,7 +3,7 @@ const { ButtonInteraction } = require('discord.js');
 
 module.exports = {
     data: {
-        buttonId: "generic-id", // customId of buttons that will execute this command
+        buttonId: "genericid", // customId of buttons that will execute this command
         permissions: "all" //TODO: Implement other permission options
     },
     /**
@@ -11,8 +11,6 @@ module.exports = {
      * @param {ButtonInteraction} interaction 
      */
     async btnExecute(interaction) {
-
-        //TODO: Implement permissions
 
         //TODO: Implement button command
         await interaction.reply("You pressed a generic button!");

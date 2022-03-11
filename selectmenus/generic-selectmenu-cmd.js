@@ -10,12 +10,10 @@ module.exports = {
      * 
      * @param {SelectMenuInteraction} interaction 
      */
-    async btnExecute(interaction) {
-
-        //TODO: Implement permissions
+    async selectExecute(interaction) {
 
         //TODO: Implement button command
-        await interaction.reply("You pressed a generic button!");
+        await interaction.reply("You pressed a generic selectmenu option!");
 
     }
 }
