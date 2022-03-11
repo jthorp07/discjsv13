@@ -1,5 +1,4 @@
 const mssql = require('mssql');
-// const { isHost, isCurrentTurn, isPlayer, isOutsideUser } = require('./globals');
 
 module.exports = {
 
