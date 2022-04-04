@@ -3,6 +3,9 @@ const mssql = require('mssql');
 module.exports = {
 
     /**
+     * Returns a promise that resolves as true if the 
+     * command's user has permission to use the command
+     * or as false if the user does not have permission.
      * 
      * @param {mssql.ConnectionPool} con 
      * @param {string} permissionLevel 
@@ -17,20 +20,12 @@ module.exports = {
                 resolve(true);
             }
 
-            if (permissionLevel == '') {
-                
+            // TODO: Add permission rules here
 
-            }
-
-            if (permissionLevel == '') {
-                
-                
-            }
-
-            // Timeout after 2 minutes (should not take nearly that long to finish)
+            // Timeout after 30 seconds (should not take nearly that long to finish)
             setTimeout(() => {
                 reject('Timeout');
-            }, 120000);
+            }, 30000);
 
         });
     }
