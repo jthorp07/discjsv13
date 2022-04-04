@@ -3,7 +3,7 @@ const { SelectMenuInteraction } = require('discord.js');
 
 module.exports = {
     data: {
-        buttonId: "generic-id", // customId of buttons that will execute this command
+        selectMenuId: "genericid", // customId of buttons that will execute this command
         permissions: "all" //TODO: Implement other permission options
     },
     /**
