@@ -3,6 +3,13 @@ const { TOKEN, SQL } = require("./config.json");
 const fs = require("fs");
 const mssql = require("mssql");
 const { checkPermissions } = require("./util/permission.js");
+const {fork} = require('child_process');
+
+/*
+ *	Launch a second process executing deploy-commands.js to ensure all 
+ *	commands are up to date on Discord's end
+ */
+fork('./desploy-commands.js');
 
 // Holy crap that's a lot of intention :flushed:
 const intent_flags = [
