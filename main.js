@@ -1,8 +1,8 @@
 const { Client, Intents, Collection } = require("discord.js");
-const { TOKEN, SQL } = require("./config.json");
+const { TOKEN, MYSQL } = require("./config-template.json");
 const fs = require("fs");
 const mssql = require("mssql");
-const { checkPermissions } = require("./util/permission.js");
+const { checkPermissions, connectToMySQL } = require("./util");
 const {fork} = require('child_process');
 
 /*
@@ -30,19 +30,9 @@ const client = new Client({ intents: intent_flags });
 /*
   Log in to database
 */
-console.log(`[Startup]: Requesting database connection`);
-const pool = new mssql.ConnectionPool(SQL);
-/**@type {mssql.ConnectionPool} */
-var con;
-pool.connect()
-	.then((conPool) => {
-		con = conPool;
-		console.log(`[Startup]: Database connection established`);
-	})
-	.catch((err) => {
-		console.log(err);
-		return;
-	});
+console.log('[Startup]: Connecting to database');
+const con = await connectToMySQL(MYSQL); // For MS SQL -> Change the ./util require statement to grab connectToMSSQL() and use config's MSSQL object as arg
+console.log('[Startup]: Database connection ready');
 
 
 /*

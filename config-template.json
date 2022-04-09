@@ -2,7 +2,7 @@
 	"TOKEN": "",
 	"CLIENT_ID": "",
 	"GUILD_ID": "",
-	"SQL": {
+	"MSSQL": {
 		"user": "",
 		"password": "",
 		"database": "",
@@ -16,5 +16,11 @@
 			"encrypt": true,
 			"trustServerCertificate": true
 		}
+	},
+	"MYSQL": {
+		"host":"",
+		"database":"",
+		"user":"",
+		"pass":""
 	}
 }
