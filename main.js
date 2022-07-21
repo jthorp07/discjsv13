@@ -1,7 +1,6 @@
-const { Client, Intents, Collection } = require("discord.js");
+const { Client, GatewayIntentBits, Collection, InteractionType, ComponentType } = require("discord.js");
 const { TOKEN, MYSQL } = require("./config-template.json");
 const fs = require("fs");
-const mssql = require("mssql");
 const { checkPermissions, connectToMySQL } = require("./util");
 const {fork} = require('child_process');
 
@@ -13,22 +12,24 @@ fork('./desploy-commands.js');
 
 // Holy crap that's a lot of intention :flushed:
 const intent_flags = [
-	Intents.FLAGS.GUILDS,
-	Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-	Intents.FLAGS.GUILD_MEMBERS,
-	Intents.FLAGS.GUILD_MESSAGES,
-	Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-	Intents.FLAGS.GUILD_MESSAGE_TYPING,
-	Intents.FLAGS.GUILD_PRESENCES,
-	Intents.FLAGS.DIRECT_MESSAGES,
-	Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-	Intents.FLAGS.DIRECT_MESSAGE_TYPING,
+	GatewayIntentBits.Guilds,
+	GatewayIntentBits.GuildEmojisAndStickers,
+	GatewayIntentBits.GuildMembers,
+	GatewayIntentBits.GuildMessages,
+	GatewayIntentBits.GuildMessageReactions,
+	GatewayIntentBits.GuildMessageTyping,
+	GatewayIntentBits.GuildPresences,
+	GatewayIntentBits.DirectMessages,
+	GatewayIntentBits.DirectMessageReactions,
+	GatewayIntentBits.DirectMessageTyping,
 ];
 
 const client = new Client({ intents: intent_flags });
 
 /*
-  Log in to database
+  Log in to database 
+
+  ** WARNING ** Only supports MySQL for now - Will add MSSQL later
 */
 console.log('[Startup]: Connecting to database');
 const con = await connectToMySQL(MYSQL); // For MS SQL -> Change the ./util require statement to grab connectToMSSQL() and use config's MSSQL object as arg
@@ -86,7 +87,7 @@ client.on("ready", () => {
 
 // Command Handling
 client.on("interactionCreate", async (interaction) => {
-	if (!interaction.isCommand()) return;
+	if (!interaction.type === InteractionType.ApplicationCommand) return;
 
 	const command = client.commands.get(interaction.commandName);
 	if (!command) return;
@@ -115,7 +116,9 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 client.on("interactionCreate", (interaction) => {
-	if (!interaction.isSelectMenu()) return;
+	if (!interaction.type === InteractionType.MessageComponent) return;
+
+	if (!interaction.componentType === ComponentType.SelectMenu) return;
 
 	// Handle selectmenus here...
 	const smCommand = smCommands.get(interaction.selectMenuId);
@@ -151,7 +154,9 @@ client.on("interactionCreate", (interaction) => {
 
 // Button interactions
 client.on("interactionCreate", (interaction) => {
-	if (!interaction.isButton()) return;
+	if (!interaction.type === InteractionType.MessageComponent) return;
+
+	if (!interaction.componentType === ComponentType.Button) return;
 
 	// Handle buttons here...
 	var btnCommand;

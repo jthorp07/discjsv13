@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { CommandInteraction, SlashCommandBuilder } = require('discord.js');
 const mssql = require('mssql');
 
 module.exports = {
